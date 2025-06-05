@@ -1,15 +1,19 @@
 /** @type {import('next').NextConfig} */
-const isGithubPages = process.env.NODE_ENV === 'production';
+
+// Asumimos que si NODE_ENV es 'production', es para el despliegue con dominio personalizado
+// donde los assets se sirven desde la raíz.
+const isProduction = process.env.NODE_ENV === 'production';
 
 const nextConfig = {
   output: 'export',
-  basePath: isGithubPages ? '/sc-webstudio' : '',
-  assetPrefix: isGithubPages ? '/sc-webstudio/' : '',
+  // Para GitHub Pages con un dominio personalizado apuntando a la raíz,
+  // basePath y assetPrefix típicamente deberían estar vacíos.
+  basePath: isProduction ? '' : '', // Cambiado de '/sc-webstudio'
+  assetPrefix: isProduction ? '' : '', // Cambiado de '/sc-webstudio/'
   trailingSlash: true,
   images: {
     unoptimized: true,
   },
-  output: 'export',
 };
 
 export default nextConfig;
