@@ -1,13 +1,13 @@
 "use client"
 
 import { motion } from "framer-motion"
-import Header from "@/components/Header"
 import Hero from "@/components/Hero"
 import ServicesSection from "@/components/services-section"
 import ProjectsSection from "@/components/projects-section"
 import WhyUsSection from "@/components/why-us-section"
 import ContactSection from "@/components/contact-section"
 import Footer from "@/components/footer"
+import Header from "@/components/header"
 
 const reveal = {
   hidden: { opacity: 0, y: 36, filter: "blur(10px)", scale: 0.985 },
