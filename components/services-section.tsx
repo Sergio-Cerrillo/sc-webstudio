@@ -101,7 +101,7 @@ export default function ServicesSection() {
 		target: ref,
 		offset: ["start start", "end start"],
 	})
-	
+
 	// Call useTransform unconditionally
 	const scrollOpacity = useTransform(scrollYProgress, [0, 0.95], [1, 0])
 	const scrollY = useTransform(scrollYProgress, [0, 0.95], [0, 100])
@@ -115,7 +115,7 @@ export default function ServicesSection() {
 	return (
 		<section
 			ref={ref}
-			className="relative py-24 md:py-32 bg-white dark:bg-black transition-colors duration-500"
+			className="relative py-24 md:py-32 bg-transparent"
 			id="servicios"
 		>
 			<div className="container mx-auto px-4 md:px-6">
@@ -147,7 +147,7 @@ export default function ServicesSection() {
 						{services.map((service) => (
 							<motion.div key={service.title} variants={itemVariants}>
 								<RotatingCard className="h-full">
-									<div className="bg-white dark:bg-black border border-gray-100 dark:border-gray-700 dark:shadow-[0_2px_10px_0_rgba(220,220,220,0.3)] p-8 h-full flex flex-col items-center text-center shadow-sm hover:shadow-md transition-shadow duration-300">
+									<div className="glass-card p-8 h-full flex flex-col items-center text-center transition-shadow duration-300">
 										<div className="mb-6 text-black dark:text-white">
 											{service.icon}
 										</div>

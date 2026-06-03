@@ -86,7 +86,7 @@ export default function WhyUsSection() {
 	return (
 		<section
 			ref={ref}
-			className="relative py-24 md:py-32 bg-white dark:bg-black transition-colors duration-500"
+			className="relative py-24 md:py-32 bg-transparent"
 			id="porque-nosotros" // Corrected ID
 		>
 			<div className="container mx-auto px-4 md:px-6">
@@ -121,7 +121,7 @@ export default function WhyUsSection() {
 								transition={{ duration: 0.6, delay: index * 0.1 }}
 							>
 								<RotatingCard>
-									<div className="flex items-start p-6 border border-gray-100 dark:border-gray-700 min-h-44 bg-white dark:bg-black shadow-sm dark:shadow-[0_2px_10px_0_rgba(220,220,220,0.3)] hover:shadow-md transition-shadow duration-300">
+									<div className="glass-card flex items-start p-6 min-h-44 transition-shadow duration-300">
 										<div className="mr-4 text-black dark:text-white">{reason.icon}</div>
 										<div>
 											<h3 className="text-lg font-normal mb-2 dark:text-white">

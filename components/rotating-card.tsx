@@ -48,21 +48,21 @@ export default function RotatingCard({ children, className = "" }: RotatingCardP
   // Determine dynamic styles safely after mount
   const dynamicStyles = mounted
     ? {
-        rotateX: isHovered ? rotateXValue : 0,
-        rotateY: isHovered ? rotateYValue : 0,
-        transformStyle: "preserve-3d" as const,
-      }
+      rotateX: isHovered ? rotateXValue : 0,
+      rotateY: isHovered ? rotateYValue : 0,
+      transformStyle: "preserve-3d" as const,
+    }
     : {
-        // Default non-animated state for SSR and pre-mount
-        transformStyle: "preserve-3d" as const,
-        rotateX: 0,
-        rotateY: 0,
-      }
+      // Default non-animated state for SSR and pre-mount
+      transformStyle: "preserve-3d" as const,
+      rotateX: 0,
+      rotateY: 0,
+    }
 
   return (
     <motion.div
       ref={ref}
-      className={`relative perspective-1000 rounded-xl shadow-lg dark:shadow-2xl transition-shadow duration-300 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 ${className}`}
+      className={`relative perspective-1000 rounded-xl transition-shadow duration-300 ${className}`}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}

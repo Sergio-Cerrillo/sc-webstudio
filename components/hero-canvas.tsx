@@ -1,34 +1,90 @@
-// NO 'use client' aquí
-import type { FC } from "react"
+"use client"
 
-const HeroCanvas: FC = () => {
-  // Solo renderiza en cliente
-  if (typeof window === "undefined") return null
-  // Importa hooks y librerías SOLO dentro del componente y SOLO si window existe
-  const { useTheme } = require("next-themes")
-  const { Canvas } = require("@react-three/fiber")
-  const drei = require("@react-three/drei")
-  const { theme } = useTheme()
-  const { OrbitControls, Html } = drei
+import { useEffect, useRef } from "react"
 
-  return (
-    <Canvas camera={{ position: [2, 2, 2], fov: 50 }}>
-      {/* @ts-ignore */}
-      <ambientLight intensity={0.7} />
-      {/* @ts-ignore */}
-      <directionalLight position={[5, 5, 5]} intensity={0.7} />
-      {/* @ts-ignore */}
-      <mesh rotation={[0.5, 0.5, 0]} castShadow receiveShadow>
-        {/* @ts-ignore */}
-        <boxGeometry args={[1.2, 1.2, 1.2]} />
-        {/* @ts-ignore */}
-        <meshStandardMaterial color={theme === "dark" ? "#222" : "#e0e0e0"} metalness={0.5} roughness={0.3} />
-      {/* @ts-ignore */}
-      </mesh>
-      <OrbitControls enablePan={false} enableZoom={false} />
-      <Html position={[0, -1.1, 0]} center style={{ pointerEvents: 'none', fontSize: 14, color: theme === "dark" ? "#fff" : "#222" }} />
-    </Canvas>
-  )
+interface HeroCanvasProps {
+  isDarkMode: boolean
 }
 
-export default HeroCanvas
+export default function HeroCanvas({ isDarkMode }: HeroCanvasProps) {
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !containerRef.current) return
+
+    let unmounted = false
+
+    async function loadCanvas() {
+      const ReactDOM = await import("react-dom/client")
+      const React = await import("react")
+
+      const { Canvas } = await import("@react-three/fiber")
+      const { Effects } = await import("@react-three/drei")
+      const { Particles } = await import("./gl/particles")
+      const { VignetteShader } = await import("./gl/shaders/vignetteShader")
+
+      if (unmounted || !containerRef.current) return
+
+      const config = {
+        speed: 1.0,
+        focus: 3.8,
+        aperture: 1.79,
+        size: 512,
+        noiseScale: 0.6,
+        noiseIntensity: 0.52,
+        timeScale: 1,
+        pointSize: 10.0,
+        opacity: 0.8,
+        planeScale: 10.0,
+        vignetteDarkness: 1.5,
+        vignetteOffset: 0.4,
+      }
+
+      const root = ReactDOM.createRoot(containerRef.current)
+
+      root.render(
+        React.createElement(Canvas, {
+          camera: {
+            position: [1.26, 2.66, -1.82],
+            fov: 50,
+            near: 0.01,
+            far: 300,
+          }
+        },
+          React.createElement("color", { attach: "background", args: [isDarkMode ? "#000000" : "#ffffff"] }),
+          React.createElement(Particles, {
+            speed: config.speed,
+            aperture: config.aperture,
+            focus: config.focus,
+            size: config.size,
+            noiseScale: config.noiseScale,
+            noiseIntensity: config.noiseIntensity,
+            timeScale: config.timeScale,
+            pointSize: config.pointSize,
+            opacity: config.opacity,
+            planeScale: config.planeScale,
+            useManualTime: false,
+            manualTime: 0,
+            introspect: false,
+            isDarkMode: isDarkMode
+          }),
+          React.createElement(Effects, { multisamping: 0, disableGamma: true },
+            React.createElement("shaderPass", {
+              args: [VignetteShader],
+              "uniforms-darkness-value": config.vignetteDarkness,
+              "uniforms-offset-value": config.vignetteOffset
+            })
+          )
+        )
+      )
+    }
+
+    loadCanvas()
+
+    return () => {
+      unmounted = true
+    }
+  }, [isDarkMode])
+
+  return <div ref={containerRef} className="absolute inset-0 w-full h-full pointer-events-none" />
+}

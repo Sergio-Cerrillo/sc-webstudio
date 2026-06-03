@@ -2,136 +2,137 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Menu, X } from "lucide-react"
+import { Menu, Moon, Sun, X } from "lucide-react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import { useTheme } from "next-themes"
-import { Switch } from "@/components/ui/switch" // Importar Switch
+import { Switch } from "@/components/ui/switch"
+import { cn } from "@/lib/utils"
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const { theme, setTheme } = useTheme() // Obtener setTheme también
-  const [mounted, setMounted] = useState(false) // Estado para controlar si el componente está montado
+  const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
 
-  // Efecto para establecer mounted a true solo en el cliente
   useEffect(() => {
     setMounted(true)
   }, [])
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 100)
-    }
-    window.addEventListener("scroll", handleScroll)
+    const handleScroll = () => setIsScrolled(window.scrollY > 24)
+    handleScroll()
+    window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
   const navItems = [
     { label: "Servicios", href: "#servicios" },
     { label: "Proyectos", href: "#proyectos" },
-    { label: "Por qué nosotros", href: "#porque-nosotros" }, // Corrected href
+    { label: "Por que nosotros", href: "#porque-nosotros" },
     { label: "Contacto", href: "#contacto" },
   ]
 
   return (
-    <motion.header
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      style={{ opacity: isScrolled ? 0.95 : 1 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300
-        ${isScrolled ? `${theme === "dark" ? "bg-black/90 shadow-[0_4px_24px_0_rgba(120,120,120,0.25)]" : "bg-white/90 shadow-md"} backdrop-blur-md dark:shadow-[0_4px_24px_0_rgba(120,120,120,0.25)]` : "bg-transparent"}
-      `}
-    >
-      <div className="container mx-auto px-4 md:px-6 py-4 flex items-center justify-between">
-        <Link href="/" className="text-xl font-light tracking-wider">
-          {/* Renderizar el logo solo cuando el componente esté montado */}
+    <header className="pointer-events-none fixed inset-x-0 top-0 z-50">
+      <motion.div
+        initial={{ opacity: 0, y: -24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        className={cn(
+          "pointer-events-auto mx-auto mt-2 flex w-[calc(100%-1rem)] items-center justify-between px-4 py-3 transition-all duration-500 sm:mt-4 sm:w-[calc(100%-2rem)] sm:px-5",
+          isScrolled
+            ? "glass-surface rounded-2xl border border-white/50 shadow-[0_10px_35px_rgba(15,23,42,0.12)] dark:border-white/15 md:max-w-5xl"
+            : "rounded-none border border-transparent bg-transparent shadow-none md:max-w-6xl",
+        )}
+      >
+        <Link href="#inicio" className="flex items-center" aria-label="Inicio">
           {mounted && (
-            <Image src={theme === "dark" ? "/logo/logo-w.png" : "/logo/logo-b.png"} width={96} height={56} alt="logo" />
+            <Image
+              src={theme === "dark" ? "/logo/logo-w.png" : "/logo/logo-b.png"}
+              width={96}
+              height={56}
+              alt="SC WebStudio"
+              className="h-auto w-20 sm:w-24"
+              priority
+            />
           )}
         </Link>
 
-        {/* Navegación de escritorio con Switch en el medio */}
-        <nav className="hidden md:flex items-center justify-center flex-1 space-x-8">
-          {navItems.slice(0, 2).map((item) => ( // First two items
+        <nav className="hidden items-center gap-7 md:flex">
+          {navItems.map((item) => (
             <Link
               key={item.label}
               href={item.href}
-              className="text-sm font-light tracking-wide hover:text-gray-600 transition-colors dark:text-white text-black drop-shadow dark:drop-shadow-lg"
-            >
-              {item.label}
-            </Link>
-          ))}
-
-          {/* Switch de tema en el centro */}
-          {mounted && (
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-gray-500">🌙</span>
-              <Switch
-                checked={theme === "dark"}
-                onCheckedChange={(checked) => setTheme(checked ? "dark" : "light")}
-                aria-label="Toggle dark mode"
-              />
-              <span className="text-xs text-gray-500">☀️</span>
-            </div>
-          )}
-
-          {navItems.slice(2).map((item) => ( // Last two items
-            <Link
-              key={item.label}
-              href={item.href}
-              className="text-sm font-light tracking-wide hover:text-gray-600 transition-colors dark:text-white text-black drop-shadow dark:drop-shadow-lg"
+              className="text-sm font-medium tracking-wide text-neutral-700 transition-colors duration-300 hover:text-neutral-950 dark:text-neutral-300 dark:hover:text-white"
             >
               {item.label}
             </Link>
           ))}
         </nav>
 
-        {/* Botón de menú móvil */}
-        {/* biome-ignore lint/a11y/useButtonType: <explanation> */}
+        <div className="hidden items-center gap-3 md:flex">
+          {mounted && (
+            <div className="glass-surface flex items-center gap-2 rounded-full px-2 py-1.5">
+              <Sun size={13} className="text-amber-500" />
+              <Switch
+                checked={theme === "dark"}
+                onCheckedChange={(checked) => setTheme(checked ? "dark" : "light")}
+                aria-label="Cambiar tema"
+              />
+              <Moon size={13} className="text-indigo-400" />
+            </div>
+          )}
+          <Link
+            href="#contacto"
+            className="glass-button rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-neutral-700 dark:text-neutral-200"
+          >
+            ¿Hablamos?
+          </Link>
+        </div>
+
         <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden focus:outline-none text-black dark:text-white" // Added text-black dark:text-white
-          aria-label="Toggle menu"
+          type="button"
+          onClick={() => setMobileMenuOpen((prev) => !prev)}
+          aria-label="Abrir menu"
+          className="glass-surface rounded-full p-2 text-neutral-700 transition-colors hover:text-neutral-950 dark:text-neutral-200 dark:hover:text-white md:hidden"
         >
           {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
-      </div>
+      </motion.div>
 
-      {/* Mobile menu */}
-      {mobileMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: "auto" }}
-          className="md:hidden bg-white dark:bg-black shadow-lg dark:shadow-[0_4px_32px_0_rgba(120,120,120,0.25)] transition-shadow duration-500"
-        >
-          <div className="container mx-auto px-4 py-4 flex flex-col items-center space-y-4"> {/* Centrar items en menú móvil */}
-            {navItems.map((item) => ( // Use navItems for mobile menu as well
+      <motion.div
+        initial={false}
+        animate={{
+          opacity: mobileMenuOpen ? 1 : 0,
+          y: mobileMenuOpen ? 0 : -10,
+          pointerEvents: mobileMenuOpen ? "auto" : "none",
+        }}
+        transition={{ duration: 0.3 }}
+        className="pointer-events-none mx-auto mt-2 w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] md:hidden"
+      >
+        <div className="glass-surface pointer-events-auto rounded-2xl p-4">
+          <nav className="flex flex-col gap-3">
+            {navItems.map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
-                className="text-sm font-light py-2 text-black dark:text-white" // Añadido text-black dark:text-white
-                onClick={() => setMobileMenuOpen(false)} // Close menu on click
+                className="rounded-xl px-3 py-2 text-sm font-medium text-neutral-700 transition-colors hover:bg-white/50 hover:text-neutral-950 dark:text-neutral-200 dark:hover:bg-white/10 dark:hover:text-white"
+                onClick={() => setMobileMenuOpen(false)}
               >
                 {item.label}
               </Link>
             ))}
-            {/* Switch de tema en el menú móvil */}
-            {mounted && (
-              <div className="flex items-center gap-2 pt-2">
-                <span className="text-xs text-gray-500">🌙</span>
-                <Switch
-                  checked={theme === "dark"}
-                  onCheckedChange={(checked) => setTheme(checked ? "dark" : "light")}
-                  aria-label="Toggle dark mode"
-                />
-                <span className="text-xs text-gray-500">☀️</span>
-              </div>
-            )}
-          </div>
-        </motion.div>
-      )}
-    </motion.header>
+            <Link
+              href="#contacto"
+              className="mt-1 rounded-xl border border-neutral-900/10 bg-neutral-900 px-3 py-2 text-center text-sm font-medium text-white dark:border-white/20 dark:bg-white dark:text-neutral-900"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Agendar llamada
+            </Link>
+          </nav>
+        </div>
+      </motion.div>
+    </header>
   )
 }

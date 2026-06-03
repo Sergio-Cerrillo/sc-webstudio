@@ -76,8 +76,9 @@
   * {
     @apply border-border;
   }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
   }
 }
 
@@ -86,6 +87,81 @@ html {
   scroll-behavior: smooth;
 }
 
+body {
+  background-color: #ffffff;
+}
+
+.dark body {
+  background-color: #06080f;
+}
+
 .perspective-1000 {
   perspective: 1000px;
+}
+
+.site-bg {
+  position: relative;
+  isolation: isolate;
+  background: #ffffff;
+}
+
+.dark .site-bg {
+  background: #000000;
+  animation: none;
+}
+
+@keyframes siteFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dark .site-bg {
+    animation: none;
+  }
+}
+
+@layer components {
+  .glass-surface {
+    @apply border border-white/45 bg-white/60 backdrop-blur-2xl;
+    box-shadow: 0 12px 40px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  }
+
+  .dark .glass-surface {
+    @apply border-white/15 bg-white/5;
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-button {
+    @apply border border-white/50 bg-white/60 backdrop-blur-xl transition-all duration-300;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.1);
+  }
+
+  .glass-button:hover {
+    @apply -translate-y-0.5 bg-white/85;
+    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.16);
+  }
+
+  .dark .glass-button {
+    @apply border-white/15 bg-white/10;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.38);
+  }
+
+  .dark .glass-button:hover {
+    @apply bg-white/15;
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.44);
+  }
+
+  .glass-card {
+    @apply glass-surface rounded-2xl;
+  }
 }
