@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef } from "react"
+import type { Root } from "react-dom/client"
 
 interface HeroCanvasProps {
   isDarkMode: boolean
@@ -49,40 +50,57 @@ export default function HeroCanvas({ isDarkMode }: HeroCanvasProps) {
             fov: 50,
             near: 0.01,
             far: 300,
-          }
-        },
-          React.createElement("color", { attach: "background", args: [isDarkMode ? "#000000" : "#ffffff"] }),
-          React.createElement(Particles, {
-            speed: config.speed,
-            aperture: config.aperture,
-            focus: config.focus,
-            size: config.size,
-            noiseScale: config.noiseScale,
-            noiseIntensity: config.noiseIntensity,
-            timeScale: config.timeScale,
-            pointSize: config.pointSize,
-            opacity: config.opacity,
-            planeScale: config.planeScale,
-            useManualTime: false,
-            manualTime: 0,
-            introspect: false,
-            isDarkMode: isDarkMode
-          }),
-          React.createElement(Effects, { multisamping: 0, disableGamma: true },
-            React.createElement("shaderPass", {
-              args: [VignetteShader],
-              "uniforms-darkness-value": config.vignetteDarkness,
-              "uniforms-offset-value": config.vignetteOffset
-            })
-          )
-        )
+          },
+          children: [
+            React.createElement("color", {
+              attach: "background",
+              args: [isDarkMode ? "#000000" : "#ffffff"],
+            }),
+            React.createElement(Particles, {
+              speed: config.speed,
+              aperture: config.aperture,
+              focus: config.focus,
+              size: config.size,
+              noiseScale: config.noiseScale,
+              noiseIntensity: config.noiseIntensity,
+              timeScale: config.timeScale,
+              pointSize: config.pointSize,
+              opacity: config.opacity,
+              planeScale: config.planeScale,
+              useManualTime: false,
+              manualTime: 0,
+              introspect: false,
+            }),
+            React.createElement(
+              Effects,
+              { multisamping: 0, disableGamma: true },
+              React.createElement("shaderPass", {
+                args: [VignetteShader],
+                "uniforms-darkness-value": config.vignetteDarkness,
+                "uniforms-offset-value": config.vignetteOffset,
+              })
+            ),
+          ],
+        })
       )
+
+      return root
     }
 
-    loadCanvas()
+    let root: Root | undefined
+
+    loadCanvas().then((mountedRoot) => {
+      if (unmounted) {
+        mountedRoot?.unmount()
+        return
+      }
+
+      root = mountedRoot
+    })
 
     return () => {
       unmounted = true
+      root?.unmount()
     }
   }, [isDarkMode])
 

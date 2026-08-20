@@ -50,7 +50,6 @@ export const GL = ({ hovering }: { hovering: boolean }) => {
           useManualTime={false}
           manualTime={0}
           introspect={hovering}
-          isDarkMode={theme === "dark"}
         />
         <Effects multisamping={0} disableGamma>
           <shaderPass
