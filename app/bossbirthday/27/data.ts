@@ -16,10 +16,10 @@ export const birthday27 = {
   title: "Boss Birthday — 27",
   description: "Una cena innecesariamente documentada.",
   event: {
-    dateLabel: "Domingo, 30 de agosto",
-    timeLabel: "21:00",
-    placeLabel: "Lugar por confirmar",
-    targetDateIso: "2026-08-30T21:00:00+02:00",
+    dateLabel: "Viernes, 4 de septiembre",
+    timeLabel: "19:30",
+    placeLabel: "Campo del blackbu",
+    targetDateIso: "2026-09-04T19:30:00+02:00",
   },
   heroCopy: {
     eyebrow: "Nuevo nivel desbloqueado",
