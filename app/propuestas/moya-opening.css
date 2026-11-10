@@ -1,0 +1,484 @@
+html:has(.moya-site) {
+  scroll-behavior: auto;
+}
+@media (max-width: 760px) and (max-height: 740px) {
+  .moya-site .moya-architecture-narrative .moya-architecture-eyebrow {
+    display: none;
+  }
+  .moya-site .moya-construction-scene .moya-architecture-narrative h2 {
+    font-size: 30px;
+  }
+  .moya-site
+    .moya-architecture-narrative:has(.moya-architecture-cta)
+    .moya-architecture-detail {
+    display: none;
+  }
+}
+.moya-site
+  .moya-construction-opening[data-fallback="true"]
+  .moya-architecture-rail,
+.moya-site
+  .moya-construction-opening[data-fallback="true"]
+  .moya-architecture-phase,
+.moya-site .moya-construction-opening[data-fallback="true"] .moya-motion-label {
+  display: none;
+}
+.moya-site .moya-construction-opening[data-fallback="true"] .moya-static-label {
+  display: inline;
+}
+.moya-site
+  .moya-construction-opening[data-fallback="true"]
+  .moya-architecture-narrative {
+  opacity: 1;
+  transform: none;
+}
+.moya-site .moya-static-label {
+  display: none;
+}
+.moya-site > .private-controls {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 8;
+  background: #0c161b5c;
+  color: #e9eee8;
+  border-bottom: 1px solid #ffffff0e;
+  backdrop-filter: blur(8px);
+}
+.moya-site > .moya-topbar {
+  isolation: isolate;
+}
+.moya-site > .moya-topbar::before {
+  content: "";
+  position: absolute;
+  inset: -37px 0 -35px;
+  z-index: -1;
+  background: linear-gradient(#10191caa, #10191c00);
+  pointer-events: none;
+}
+.moya-site .moya-construction-opening {
+  position: relative;
+  background: #10191c;
+  color: #e9eee8;
+}
+.moya-site .moya-construction-scene {
+  --narrative-opacity: 1;
+  --narrative-y: 0px;
+  --progress: 0;
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  width: 100%;
+  overflow: hidden;
+  isolation: isolate;
+  color: #e9eee8;
+  background: #10191c;
+}
+.moya-site .moya-architecture-atmosphere {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 74% 45%, #47706d27, transparent 54%),
+    radial-gradient(ellipse at 68% 74%, #b8a27812, transparent 38%);
+}
+.moya-site .moya-architecture-mount,
+.moya-site .moya-architecture-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.moya-site .moya-architecture-mount {
+  opacity: 0;
+}
+.moya-site .moya-architecture-mount[data-ready="true"] {
+  opacity: 1;
+}
+.moya-site .moya-architecture-fallback {
+  position: absolute;
+  width: 63%;
+  height: 79%;
+  left: 37%;
+  top: 13%;
+  pointer-events: none;
+  opacity: 1;
+}
+.moya-site .moya-architecture-fallback > svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.moya-site
+  .moya-construction-opening[data-ready="true"]
+  .moya-architecture-fallback {
+  opacity: 0;
+}
+.moya-site .moya-architecture-finished {
+  display: none;
+}
+.moya-site
+  .moya-construction-opening[data-fallback="true"]
+  .moya-architecture-terrain {
+  display: none;
+}
+.moya-site
+  .moya-construction-opening[data-fallback="true"]
+  .moya-architecture-finished {
+  display: block;
+}
+.moya-site
+  .moya-construction-opening[data-fallback="true"]
+  .moya-architecture-mount {
+  display: none;
+}
+.moya-site .moya-architecture-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, #10191c00 84%, #10191c33),
+    linear-gradient(transparent 78%, #10191c80);
+}
+.moya-site .moya-architecture-narrative {
+  position: absolute;
+  left: 6.5%;
+  top: 30%;
+  width: 31.5%;
+  z-index: 2;
+  opacity: var(--narrative-opacity);
+  transform: translateY(var(--narrative-y));
+  will-change: opacity, transform;
+}
+.moya-site .moya-architecture-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  white-space: nowrap;
+  font-size: 8px;
+  letter-spacing: 0.17em;
+  color: #abb7ae;
+  margin-bottom: 40px;
+}
+.moya-site .moya-architecture-eyebrow > span {
+  width: 22px;
+  height: 1px;
+  background: #bdaf8a;
+}
+.moya-site .moya-architecture-phase {
+  display: flex;
+  gap: 15px;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: #c3b48b;
+  margin-bottom: 19px;
+}
+.moya-site .moya-architecture-phase > span {
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #8c9d9b;
+}
+.moya-site .moya-architecture-narrative h2 {
+  font:
+    400 clamp(35px, 3.65vw, 65px) / 1.075 Georgia,
+    "Times New Roman",
+    serif;
+  letter-spacing: -0.043em;
+  color: #eef0e5;
+}
+.moya-site .moya-architecture-narrative h2 em {
+  color: #c8b58d;
+}
+.moya-site .moya-architecture-detail {
+  margin-top: 25px;
+  max-width: 290px;
+  font-size: 13px;
+  line-height: 1.85;
+  color: #a0adaa;
+}
+.moya-site .moya-architecture-disciplines {
+  margin-top: 37px;
+  color: #82938e;
+  font-size: 8px;
+  letter-spacing: 0.065em;
+}
+.moya-site .moya-architecture-cta {
+  display: inline-flex;
+  gap: 18px;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid #b8a57c8c;
+  color: #e8dcc0;
+  font-size: 10px;
+  margin-top: 22px;
+}
+.moya-site .moya-architecture-edition {
+  position: absolute;
+  right: 4%;
+  top: 50%;
+  writing-mode: vertical-rl;
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  font-size: 7px;
+  letter-spacing: 0.2em;
+  color: #899b98;
+}
+.moya-site .moya-architecture-edition > i {
+  height: 48px;
+  width: 1px;
+  background: #bac5ad40;
+}
+.moya-site .moya-architecture-bottom {
+  position: absolute;
+  left: 6.5%;
+  right: 6.5%;
+  bottom: 110px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+.moya-site .moya-architecture-scroll {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #b8c0ae;
+}
+.moya-site .moya-architecture-skip {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 9px;
+  color: #b8c0ae;
+  padding: 13px 0;
+  border-bottom: 1px solid #b8c0ae38;
+  min-height: 44px;
+}
+.moya-site .moya-architecture-skip:hover {
+  border-color: #cdbb92;
+  color: #e2d6bb;
+}
+.moya-site .moya-architecture-rail {
+  position: absolute;
+  inset: auto 6.5% 36px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 23px;
+}
+.moya-site .moya-architecture-rail > div {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  border-top: 1px solid #a5b8b52e;
+  padding-top: 17px;
+  opacity: 0.43;
+  transition: opacity 0.25s;
+}
+.moya-site .moya-architecture-rail > div[data-active="true"],
+.moya-site .moya-architecture-rail > div[data-complete="true"] {
+  opacity: 1;
+}
+.moya-site .moya-architecture-rail > div > span {
+  font-size: 8px;
+  color: #c3b48d;
+  letter-spacing: 0.06em;
+}
+.moya-site .moya-architecture-rail > div > p {
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  color: #b5c0b9;
+}
+.moya-site .moya-architecture-rail b {
+  position: absolute;
+  left: 0;
+  top: -1px;
+  height: 1px;
+  width: 100%;
+  background: #c4b18b;
+  transform-origin: left;
+  transform: scaleX(0);
+}
+.moya-site .moya-architecture-rail > div:nth-child(1) b {
+  transform: scaleX(clamp(0, calc(var(--progress) / 0.14), 1));
+}
+.moya-site .moya-architecture-rail > div:nth-child(2) b {
+  transform: scaleX(clamp(0, calc((var(--progress) - 0.14) / 0.15), 1));
+}
+.moya-site .moya-architecture-rail > div:nth-child(3) b {
+  transform: scaleX(clamp(0, calc((var(--progress) - 0.29) / 0.34), 1));
+}
+.moya-site .moya-architecture-rail > div:nth-child(4) b {
+  transform: scaleX(clamp(0, calc((var(--progress) - 0.63) / 0.28), 1));
+}
+.moya-site .moya-architecture-rail > div:nth-child(5) b {
+  transform: scaleX(clamp(0, calc((var(--progress) - 0.91) / 0.09), 1));
+}
+.moya-site > .moya-projects {
+  position: relative;
+  background: #f5f2e9;
+  scroll-margin-top: 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .moya-site
+    .moya-construction-opening:not([data-ready="true"])
+    .moya-architecture-narrative {
+    animation: moya-architecture-enter 0.8s ease-out both;
+  }
+  @keyframes moya-architecture-enter {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+@media (max-width: 760px) {
+  .moya-site .moya-architecture-narrative {
+    left: 6%;
+    top: 23%;
+    width: 88%;
+  }
+  .moya-site .moya-architecture-eyebrow {
+    font-size: 6px;
+    letter-spacing: 0.16em;
+    gap: 9px;
+    margin-bottom: 22px;
+  }
+  .moya-site .moya-architecture-eyebrow > span {
+    width: 18px;
+  }
+  .moya-site .moya-architecture-phase {
+    font-size: 8px;
+    margin-bottom: 13px;
+    gap: 12px;
+  }
+  .moya-site .moya-architecture-phase > span {
+    font-size: 7px;
+  }
+  .moya-site .moya-architecture-narrative h2 {
+    font-size: clamp(32px, 8.5vw, 58px);
+    line-height: 1.06;
+  }
+  .moya-site .moya-architecture-detail {
+    margin-top: 15px;
+    font-size: 12px;
+    max-width: 310px;
+  }
+  .moya-site .moya-architecture-disciplines {
+    display: none;
+  }
+  .moya-site .moya-architecture-cta {
+    margin-top: 10px;
+    font-size: 9px;
+    padding: 9px 0;
+  }
+  .moya-site .moya-architecture-fallback {
+    left: 0;
+    top: 39%;
+    height: 44%;
+    width: 100%;
+  }
+  .moya-site .moya-architecture-edition {
+    display: none;
+  }
+  .moya-site .moya-architecture-bottom {
+    left: 6%;
+    right: 6%;
+    bottom: 104px;
+    gap: 10px;
+  }
+  .moya-site .moya-architecture-scroll {
+    font-size: 6px;
+    letter-spacing: 0.07em;
+    gap: 9px;
+  }
+  .moya-site .moya-architecture-skip {
+    font-size: 8px;
+    gap: 7px;
+  }
+  .moya-site .moya-architecture-rail {
+    left: 6%;
+    right: 6%;
+    bottom: 29px;
+    gap: 10px;
+  }
+  .moya-site .moya-architecture-rail > div {
+    display: block;
+    padding-top: 11px;
+  }
+  .moya-site .moya-architecture-rail > div > span {
+    font-size: 7px;
+  }
+  .moya-site .moya-architecture-rail > div > p {
+    font-size: 9px;
+    line-height: 1.4;
+    margin-top: 7px;
+    min-height: 20px;
+    letter-spacing: 0;
+  }
+}
+@media (min-width: 761px) and (max-height: 650px) {
+  .moya-site .moya-architecture-narrative {
+    top: 28%;
+  }
+  .moya-site .moya-architecture-narrative h2 {
+    font-size: 36px;
+  }
+  .moya-site .moya-architecture-eyebrow {
+    margin-bottom: 20px;
+  }
+  .moya-site .moya-architecture-detail {
+    margin-top: 15px;
+  }
+  .moya-site .moya-architecture-disciplines {
+    display: none;
+  }
+  .moya-site .moya-architecture-bottom {
+    bottom: 76px;
+  }
+  .moya-site .moya-architecture-rail {
+    bottom: 20px;
+  }
+  .moya-site > .moya-topbar {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+  .moya-site .moya-logo img {
+    height: 45px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .moya-site .moya-motion-label {
+    display: none;
+  }
+  .moya-site .moya-static-label {
+    display: inline;
+  }
+  .moya-site .moya-construction-scene {
+    position: relative;
+  }
+  .moya-site .moya-architecture-rail,
+  .moya-site .moya-architecture-phase,
+  .moya-site .moya-architecture-terrain {
+    display: none;
+  }
+  .moya-site .moya-architecture-finished {
+    display: block;
+  }
+  .moya-site .moya-architecture-narrative {
+    opacity: 1;
+    transform: none;
+  }
+  .moya-site .moya-architecture-bottom {
+    bottom: 30px;
+  }
+}

@@ -1,7 +1,7 @@
 "use client"
 
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react"
-import { AnimatePresence, motion, useReducedMotion, useScroll } from "framer-motion"
+import { AnimatePresence, motion, useReducedMotion, useScroll, type Variants } from "framer-motion"
 import { ArrowDown, Check, Send, ShieldAlert } from "lucide-react"
 import { birthday27 } from "../data"
 import { submitBirthdayRsvp } from "../rsvp"
@@ -22,7 +22,7 @@ const targetTime = new Date(birthday27.event.targetDateIso).getTime()
 const revealViewport = { once: true, amount: 0.25 }
 const officialStatuses = ["aprobado", "pendiente", "grave", "inevitable", "fase dos", "documentado"]
 
-const reveal = {
+const reveal: Variants = {
   hidden: { opacity: 0, y: 28, filter: "blur(10px)" },
   visible: {
     opacity: 1,

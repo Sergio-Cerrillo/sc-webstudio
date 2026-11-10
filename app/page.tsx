@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, type Variants } from "framer-motion"
 import Hero from "@/components/Hero"
 import ServicesSection from "@/components/services-section"
 import ProjectsSection from "@/components/projects-section"
@@ -9,7 +9,7 @@ import ContactSection from "@/components/contact-section"
 import Footer from "@/components/footer"
 import Header from "@/components/header"
 
-const reveal = {
+const reveal: Variants = {
   hidden: { opacity: 0, y: 36, filter: "blur(10px)", scale: 0.985 },
   visible: {
     opacity: 1,

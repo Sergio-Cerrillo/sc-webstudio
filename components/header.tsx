@@ -2,14 +2,14 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Menu, Moon, Sun, X } from "lucide-react"
+import { LockKeyhole, Menu, Moon, Sun, X } from "lucide-react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import { useTheme } from "next-themes"
 import { Switch } from "@/components/ui/switch"
 import { cn } from "@/lib/utils"
 
-export default function Header() {
+export default function Header({ homePath = "" }: { homePath?: string } = {}) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const { theme, setTheme } = useTheme()
@@ -46,7 +46,11 @@ export default function Header() {
             : "rounded-none border border-transparent bg-transparent shadow-none md:max-w-6xl",
         )}
       >
-        <Link href="#inicio" className="flex items-center" aria-label="Inicio">
+        <Link
+          href={`${homePath}#inicio`}
+          className="flex items-center"
+          aria-label="Inicio"
+        >
           {mounted && (
             <Image
               src={theme === "dark" ? "/logo/logo-w.png" : "/logo/logo-b.png"}
@@ -59,16 +63,28 @@ export default function Header() {
           )}
         </Link>
 
-        <nav className="hidden items-center gap-7 md:flex">
+        <nav
+          aria-label="Navegación principal"
+          className="hidden items-center gap-4 md:flex lg:gap-7"
+        >
           {navItems.map((item) => (
             <Link
               key={item.label}
-              href={item.href}
+              href={`${homePath}${item.href}`}
               className="text-sm font-medium tracking-wide text-neutral-700 transition-colors duration-300 hover:text-neutral-950 dark:text-neutral-300 dark:hover:text-white"
             >
               {item.label}
             </Link>
           ))}
+          <Link
+            href="/propuestas/acceso"
+            prefetch={false}
+            aria-label="Acceso privado a propuestas"
+            title="Propuestas privadas"
+            className="glass-button flex h-10 w-10 items-center justify-center rounded-full text-neutral-700 dark:text-neutral-200"
+          >
+            <LockKeyhole size={17} aria-hidden="true" />
+          </Link>
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
@@ -77,28 +93,45 @@ export default function Header() {
               <Sun size={13} className="text-amber-500" />
               <Switch
                 checked={theme === "dark"}
-                onCheckedChange={(checked) => setTheme(checked ? "dark" : "light")}
+                onCheckedChange={(checked) =>
+                  setTheme(checked ? "dark" : "light")
+                }
                 aria-label="Cambiar tema"
               />
               <Moon size={13} className="text-indigo-400" />
             </div>
           )}
           <Link
-            href="#contacto"
-            className="glass-button rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-neutral-700 dark:text-neutral-200"
+            href={`${homePath}#contacto`}
+            className="glass-button hidden rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-neutral-700 dark:text-neutral-200 lg:inline-flex"
           >
             ¿Hablamos?
           </Link>
         </div>
 
-        <button
-          type="button"
-          onClick={() => setMobileMenuOpen((prev) => !prev)}
-          aria-label="Abrir menu"
-          className="glass-surface rounded-full p-2 text-neutral-700 transition-colors hover:text-neutral-950 dark:text-neutral-200 dark:hover:text-white md:hidden"
+        <nav
+          aria-label="Accesos móviles"
+          className="flex items-center gap-2 md:hidden"
         >
-          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+          <Link
+            href="/propuestas/acceso"
+            prefetch={false}
+            aria-label="Acceso privado a propuestas"
+            title="Propuestas privadas"
+            className="glass-surface flex h-10 w-10 items-center justify-center rounded-full text-neutral-700 dark:text-neutral-200"
+          >
+            <LockKeyhole size={18} aria-hidden="true" />
+          </Link>
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen((prev) => !prev)}
+            aria-label={mobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={mobileMenuOpen}
+            className="glass-surface rounded-full p-2 text-neutral-700 transition-colors hover:text-neutral-950 dark:text-neutral-200 dark:hover:text-white md:hidden"
+          >
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </nav>
       </motion.div>
 
       <motion.div
@@ -109,6 +142,8 @@ export default function Header() {
           pointerEvents: mobileMenuOpen ? "auto" : "none",
         }}
         transition={{ duration: 0.3 }}
+        aria-hidden={!mobileMenuOpen}
+        style={{ visibility: mobileMenuOpen ? "visible" : "hidden" }}
         className="pointer-events-none mx-auto mt-2 w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] md:hidden"
       >
         <div className="glass-surface pointer-events-auto rounded-2xl p-4">
@@ -116,7 +151,7 @@ export default function Header() {
             {navItems.map((item) => (
               <Link
                 key={item.label}
-                href={item.href}
+                href={`${homePath}${item.href}`}
                 className="rounded-xl px-3 py-2 text-sm font-medium text-neutral-700 transition-colors hover:bg-white/50 hover:text-neutral-950 dark:text-neutral-200 dark:hover:bg-white/10 dark:hover:text-white"
                 onClick={() => setMobileMenuOpen(false)}
               >
@@ -124,7 +159,7 @@ export default function Header() {
               </Link>
             ))}
             <Link
-              href="#contacto"
+              href={`${homePath}#contacto`}
               className="mt-1 rounded-xl border border-neutral-900/10 bg-neutral-900 px-3 py-2 text-center text-sm font-medium text-white dark:border-white/20 dark:bg-white dark:text-neutral-900"
               onClick={() => setMobileMenuOpen(false)}
             >

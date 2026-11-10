@@ -1,0 +1,270 @@
+.moya-site .moya-wall-opening {
+  height: 240vh;
+  height: 240svh;
+  position: relative;
+  background: #544735;
+  color: #fff9e9;
+}
+.moya-site .moya-wall-scene {
+  --wall-position: 1;
+  --wall-copy: 1;
+  --wall-caption: 0;
+  --wall-light: 0;
+  --wall-progress: 0%;
+  height: 100vh;
+  height: 100svh;
+  position: sticky;
+  top: 0;
+  overflow: hidden;
+  isolation: isolate;
+  background: #544735;
+}
+/* One frame is shared by BOTH original canvases, including portrait crops.
+   The base never receives a scroll transform, zoom or animated object-position. */
+.moya-site .moya-wall-frame {
+  --photo-width: max(100%, calc(100svh * 1672 / 941));
+  position: absolute;
+  width: var(--photo-width);
+  aspect-ratio: 1672 / 941;
+  left: calc((100% - var(--photo-width)) / 2);
+  top: 50%;
+  transform: translateY(-50%);
+}
+.moya-site .moya-wall-base,
+.moya-site .moya-wall-moving,
+.moya-site .moya-wall-moving > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+}
+.moya-site .moya-wall-moving {
+  transform: translate3d(
+    0,
+    calc(var(--wall-position) * (50svh + 50%)),
+    0
+  );
+  will-change: transform;
+}
+.moya-site .moya-wall-raking {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 81% 41%, #ffe4ad, transparent 27%);
+  mix-blend-mode: soft-light;
+  opacity: var(--wall-light);
+  mask-image: url("/propuestas/construccions-germans-moya/casa-y-pared-germans-moya/02-pared-logo-transparente.webp");
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+}
+.moya-site .moya-wall-shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: var(--wall-copy);
+  background: linear-gradient(90deg, #14241ac4, #14241a62 37%, transparent 72%);
+}
+.moya-site .moya-wall-copy {
+  position: absolute;
+  left: 6.5%;
+  top: 29%;
+  max-width: 74%;
+  opacity: var(--wall-copy);
+}
+.moya-site .moya-wall-copy > .p-eyebrow {
+  font-size: 9px;
+  letter-spacing: 0.23em;
+  color: #f1ebd6;
+  margin-bottom: 28px;
+}
+.moya-site .moya-wall-copy h1 {
+  font:
+    400 clamp(48px, 6.6vw, 110px) / 1.025 Georgia,
+    "Times New Roman",
+    serif;
+  letter-spacing: -0.055em;
+  color: #fff9eb;
+}
+.moya-site .moya-wall-copy h1 em {
+  color: #e5e2bd;
+}
+.moya-site .moya-wall-copy > p:not(.p-eyebrow) {
+  font-size: 12px;
+  line-height: 1.85;
+  margin-top: 27px;
+  color: #f4efdf;
+}
+.moya-site .moya-wall-cue {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-top: 32px;
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.moya-site .moya-wall-cue > svg {
+  box-sizing: content-box;
+  padding: 9px;
+  border: 1px solid #fff7;
+  border-radius: 50%;
+}
+.moya-site .moya-wall-caption {
+  position: absolute;
+  bottom: 8%;
+  left: 6.5%;
+  opacity: var(--wall-caption);
+  text-shadow: 0 2px 20px #0008;
+  pointer-events: none;
+}
+.moya-site .moya-wall-caption > span {
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  color: #e7e0c5;
+}
+.moya-site .moya-wall-caption > p {
+  font:
+    400 clamp(30px, 3vw, 49px) / 1.1 Georgia,
+    "Times New Roman",
+    serif;
+  letter-spacing: -0.03em;
+  margin-top: 16px;
+}
+.moya-site .moya-wall-skip {
+  position: absolute;
+  right: 5%;
+  bottom: 37px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 12px 16px;
+  min-height: 44px;
+  font-size: 10px;
+  color: #fff9e9;
+  border: 1px solid #fff8;
+  background: #1a271f70;
+  backdrop-filter: blur(8px);
+}
+.moya-site .moya-wall-skip:hover {
+  background: #1a271f99;
+}
+.moya-site .moya-wall-track {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #fff3;
+}
+.moya-site .moya-wall-track > span {
+  display: block;
+  width: var(--wall-progress);
+  height: 100%;
+  background: #e5d6aa;
+}
+.moya-site:has(.moya-wall-opening) > .moya-topbar::before {
+  background: linear-gradient(#14221a85, #14221a18 75%, transparent);
+}
+@media (max-width: 760px) {
+  .moya-site .moya-wall-opening {
+    height: 195vh;
+    height: 195svh;
+  }
+  .moya-site .moya-wall-frame {
+    left: clamp(
+      calc(100% - var(--photo-width)),
+      calc(50% - var(--photo-width) * 0.79665),
+      0px
+    );
+  }
+  .moya-site .moya-wall-copy {
+    left: 6%;
+    right: 5%;
+    max-width: none;
+    top: 30%;
+  }
+  .moya-site .moya-wall-copy > .p-eyebrow {
+    font-size: 7px;
+    letter-spacing: 0.16em;
+    margin-bottom: 23px;
+  }
+  .moya-site .moya-wall-copy h1 {
+    font-size: clamp(36px, 10.6vw, 70px);
+    line-height: 1.06;
+  }
+  .moya-site .moya-wall-copy > p:not(.p-eyebrow) {
+    font-size: 11px;
+    margin-top: 24px;
+  }
+  .moya-site .moya-wall-cue {
+    font-size: 7px;
+    letter-spacing: 0.09em;
+    gap: 15px;
+    margin-top: 29px;
+  }
+  .moya-site .moya-wall-caption {
+    left: 6%;
+    bottom: 12%;
+  }
+  .moya-site .moya-wall-caption > p {
+    font-size: 32px;
+  }
+  .moya-site .moya-wall-skip {
+    bottom: 27px;
+    font-size: 9px;
+    padding: 10px 12px;
+    gap: 10px;
+  }
+  .moya-site .moya-wall-shade {
+    background: linear-gradient(90deg, #14241aa8, #14241a22 90%);
+  }
+}
+@media (max-height: 650px) and (min-width: 761px) {
+  .moya-site .moya-wall-copy {
+    top: 30%;
+  }
+  .moya-site .moya-wall-copy h1 {
+    font-size: clamp(38px, 5.5vw, 64px);
+  }
+  .moya-site .moya-wall-copy > .p-eyebrow {
+    margin-bottom: 14px;
+  }
+  .moya-site .moya-wall-copy > p:not(.p-eyebrow) {
+    display: none;
+  }
+  .moya-site .moya-wall-cue {
+    margin-top: 20px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .moya-site .moya-wall-opening {
+    height: 100vh;
+    height: 100svh;
+  }
+  .moya-site .moya-wall-scene {
+    position: relative;
+  }
+  .moya-site .moya-wall-moving {
+    transform: none;
+    will-change: auto;
+  }
+  .moya-site .moya-wall-copy,
+  .moya-site .moya-wall-shade {
+    opacity: 1;
+  }
+  .moya-site .moya-wall-caption,
+  .moya-site .moya-wall-track,
+  .moya-site .moya-wall-raking {
+    display: none;
+  }
+}
+@media (max-aspect-ratio: 1/1) {
+  .moya-site .moya-wall-frame {
+    left: clamp(
+      calc(100% - var(--photo-width)),
+      calc(50% - var(--photo-width) * 0.79665),
+      0px
+    );
+  }
+}

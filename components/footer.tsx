@@ -7,7 +7,7 @@ import { Instagram, Mail } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react" // Added useEffect and useState
 
-export default function Footer() {
+export default function Footer({ homePath = "" }: { homePath?: string } = {}) {
   const currentYear = new Date().getFullYear()
   const { theme } = useTheme()
   const [mounted, setMounted] = useState(false) // Added mounted state
@@ -32,7 +32,14 @@ export default function Footer() {
             <Link href="/" className="text-xl font-light tracking-wider">
               {/* Render the logo only when the component is mounted */}
               {mounted && (
-                <Image src={theme === "dark" ? "/logo/logo-w.png" : "/logo/logo-b.png"} width={96} height={56} alt="logo" />
+                <Image
+                  src={
+                    theme === "dark" ? "/logo/logo-w.png" : "/logo/logo-b.png"
+                  }
+                  width={96}
+                  height={56}
+                  alt="logo"
+                />
               )}
             </Link>
             <p className="mt-4 font-light text-neutral-600 dark:text-neutral-400">
@@ -46,7 +53,7 @@ export default function Footer() {
               {footerNavItems.map((item) => (
                 <li key={item.label}>
                   <Link
-                    href={item.href}
+                    href={`${homePath}${item.href}`}
                     className="font-light text-neutral-600 transition-colors hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
                   >
                     {item.label}
@@ -59,7 +66,8 @@ export default function Footer() {
           <div>
             <h3 className="mb-4 text-lg font-normal">Contacto</h3>
             <p className="mb-4 font-light text-neutral-600 dark:text-neutral-400">
-              ¿Tienes alguna pregunta o proyecto en mente? Contáctanos hoy mismo.
+              ¿Tienes alguna pregunta o proyecto en mente? Contáctanos hoy
+              mismo.
             </p>
             <div className="flex space-x-4">
               <motion.a
@@ -72,7 +80,6 @@ export default function Footer() {
                 <Instagram size={20} />
                 <span className="sr-only">Instagram</span>
               </motion.a>
-
 
               <motion.a
                 href="mailto:info@scwebstudio.com"
